@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Login</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif;}
+body{display:flex;justify-content:center;align-items:center;height:100vh;background:linear-gradient(135deg,#6e8efb,#a777e3);}
+.login-container{background:#fff;padding:40px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.2);width:350px;text-align:center;}
+h2{margin-bottom:25px;color:#333;}
+select,input{width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px;}
+button{width:100%;padding:12px;margin-top:20px;background:#6e8efb;border:none;color:#fff;border-radius:8px;cursor:pointer;}
+button:hover{background:#5b76d1;}
+.error{color:red;margin-top:10px;font-size:0.9rem;}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+  <h2>Login</h2>
+  <form id="loginForm">
+
+    <select id="role" name="role" required>
+      <option value="admin">Admin</option>
+      <option value="student">Student</option>
+    </select>
+
+    <input type="text" id="username" name="username" placeholder="Username" required autocomplete="username">
+    <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password">
+
+    <button type="submit">Login</button>
+    <p class="error" id="errorMsg"></p>
+
+  </form>
+</div>
+
+<script>
+const API_ADMIN = "http://localhost:5000/api/admin";
+const API_STUDENT = "http://localhost:5000/api/student";
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const role = document.getElementById("role").value;
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
+  errorMsg.innerText = "";
+
+  const url = role === "admin" ? `${API_ADMIN}/login` : `${API_STUDENT}/login`;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
+
+    if (!res.ok) {
+      errorMsg.innerText = data.message || "Login failed ❌";
+      return;
+    }
+
+    // Save role & token, redirect
+    if (role === "admin") {
+      localStorage.setItem("role", "admin");
+      localStorage.setItem("token", data.token || ""); // if admin API returns a token
+      window.location.href = "admin.html";
+      return;
+    }
+
+    if (role === "student") {
+      localStorage.setItem("role", "student");
+      localStorage.setItem("studentId", data.studentId);  // MongoDB _id
+      localStorage.setItem("token", data.token);
+      window.location.href = "student.html";
+    }
+
+  } catch (err) {
+    console.error("Login error:", err);
+    errorMsg.innerText = "Server error ❌";
+  }
+});
+</script>
+
+</body>
+</html>

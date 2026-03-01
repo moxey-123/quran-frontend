@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+<style>
+
+/* ================= GLOBAL ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  transition:0.3s ease;
+}
+body{
+  display:flex;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ================= SIDEBAR ================= */
+
+/* =====================================================
+   🚀 PREMIUM FIXED SIDEBAR
+===================================================== */
+
+body{
+  display:flex;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  height:100vh;
+  width:260px;
+
+  background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);
+  color:white;
+
+  padding:40px 20px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  box-shadow:8px 0 40px rgba(0,0,0,0.25);
+  z-index:1000;
+
+  animation:slideInSidebar 0.8s ease;
+}
+
+/* Sidebar Animation */
+@keyframes slideInSidebar{
+  from{
+    transform:translateX(-100%);
+    opacity:0;
+  }
+  to{
+    transform:translateX(0);
+    opacity:1;
+  }
+}
+
+/* Logo / Title */
+.sidebar h2{
+  margin-bottom:50px;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:1px;
+  background:linear-gradient(90deg,#00f7ff,#6e8efb);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ================= SIDEBAR BUTTONS ================= */
+
+.sidebar button{
+  width:100%;
+  padding:14px 18px;
+  margin-bottom:15px;
+
+  border:none;
+  border-radius:16px;
+
+  background:rgba(255,255,255,0.08);
+  color:white;
+
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:0.5px;
+
+  cursor:pointer;
+
+  backdrop-filter:blur(10px);
+
+  transition:all 0.3s ease;
+
+  position:relative;
+  overflow:hidden;
+}
+
+/* Hover */
+.sidebar button:hover{
+  background:linear-gradient(135deg,#6e8efb,#2a5298);
+  transform:translateX(6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Active Indicator Line */
+.sidebar button::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:4px;
+  background:#00f7ff;
+  transform:scaleY(0);
+  transition:0.3s ease;
+}
+
+.sidebar button:hover::before{
+  transform:scaleY(1);
+}
+
+/* ================= MAIN CONTENT SHIFT ================= */
+
+.main{
+  margin-left:260px;   /* IMPORTANT */
+  flex:1;
+  padding:40px;
+  overflow-y:auto;
+}
+
+/* =====================================================
+   📱 RESPONSIVE SIDEBAR (MOBILE)
+===================================================== */
+
+@media(max-width:768px){
+
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+    flex-direction:row;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding:15px;
+  }
+
+  .sidebar h2{
+    width:100%;
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .sidebar button{
+    width:auto;
+    margin:5px;
+    padding:10px 14px;
+    font-size:13px;
+  }
+
+  .main{
+    margin-left:0;
+    padding:20px;
+  }
+}
+/* ================= MAIN ================= */
+
+.main{
+  flex:1;
+  padding:40px;
+  overflow-y:auto;
+}
+
+h1{
+  font-size:26px;
+  margin-bottom:25px;
+  font-weight:700;
+  color:#1e3c72;
+}
+
+
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(40px) scale(0.95);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* =====================================================
+   🚀 PREMIUM PROFILE CARD — GLASS + GLOW + ANIMATION
+===================================================== */
+
+.profile-card{
+
+  /* ================= Gradient Background ================= */
+  background: linear-gradient(
+    -45deg,
+    #0f2027,
+    #203a43,
+    #2c5364
+  );
+
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite, fadeUp 0.9s ease;
+
+  /* ================= Glass Effect ================= */
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  padding:50px;
+  border-radius:35px;
+
+  max-width:480px;
+  margin:70px auto;
+
+  position:relative;
+  overflow:hidden;
+
+  text-align:center;
+
+  transition:0.4s ease;
+
+  /* Soft Glow */
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.2),
+    0 0 40px rgba(44,83,100,0.6);
+}
+
+/* =====================================================
+   ✨ Animated Glow Border
+===================================================== */
+
+.profile-card::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+
+  background: linear-gradient(
+    45deg,
+    #00f7ff,
+    #6e8efb,
+    #ff00c8,
+    #00f7ff
+  );
+
+  background-size:400% 400%;
+  animation: borderGlow 6s linear infinite;
+
+  z-index:-2;
+  border-radius:38px;
+}
+
+/* Inner Glass Layer */
+.profile-card::after{
+  content:"";
+  position:absolute;
+  inset:15px;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(30px);
+
+  border-radius:25px;
+  z-index:0;
+}
+
+/* Bring Content Above Layers */
+.profile-card *{
+  position:relative;
+  z-index:2;
+}
+
+/* =====================================================
+   👑 Animated Light Shine Effect
+===================================================== */
+
+.profile-card .shine{
+  position:absolute;
+  top:-150%;
+  left:-150%;
+
+  width:200%;
+  height:200%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+
+  transform:rotate(25deg);
+  animation: lightMove 6s linear infinite;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* =====================================================
+   🖼 Profile Image
+===================================================== */
+
+.profile-card img{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+
+  border:5px solid white;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 20px rgba(255,255,255,0.4);
+
+  margin-bottom:20px;
+
+  transition:0.4s ease;
+}
+
+.profile-card img:hover{
+  transform:scale(1.1) rotate(6deg);
+}
+
+/* =====================================================
+   ✍ Text Styling (Readable in Dark Mode)
+===================================================== */
+
+.profile-card h3{
+  color:white;
+  font-size:22px;
+  margin-bottom:15px;
+}
+
+.profile-card p{
+  color:#e6e6e6;
+  font-size:15px;
+  margin:10px 0;
+}
+
+.profile-card span{
+  background:rgba(255,255,255,0.15);
+  padding:5px 12px;
+  border-radius:15px;
+  color:white;
+  font-weight:700;
+  transition:0.3s ease;
+}
+
+.profile-card span:hover{
+  background:white;
+  color:#0f2027;
+  transform:scale(1.1);
+}
+
+/* =====================================================
+   🔥 Status Badge
+===================================================== */
+
+.status-badge{
+  position:absolute;
+  top:20px;
+  right:20px;
+
+  padding:8px 16px;
+  border-radius:30px;
+
+  font-size:12px;
+  font-weight:700;
+
+  background:#00c853;
+  color:white;
+
+  box-shadow:0 0 20px rgba(0,200,83,0.7);
+
+  animation:pulseGlow 2s infinite;
+  z-index:3;
+}
+
+/* =====================================================
+   🎬 Animations
+===================================================== */
+
+@keyframes gradientMove{
+  0%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+  100%{ background-position:0% 50%; }
+}
+
+@keyframes borderGlow{
+  0%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+  100%{ background-position:0% 50%; }
+}
+
+@keyframes lightMove{
+  0%{ transform:translateX(-100%) rotate(25deg); }
+  100%{ transform:translateX(100%) rotate(25deg); }
+}
+
+@keyframes pulseGlow{
+  0%{ box-shadow:0 0 5px #00c853; }
+  50%{ box-shadow:0 0 25px #00c853; }
+  100%{ box-shadow:0 0 5px #00c853; }
+}
+
+/* =====================================================
+   🌙 PREMIUM DARK MODE SUPPORT
+===================================================== */
+
+@media (prefers-color-scheme: dark){
+
+  .profile-card{
+    background: linear-gradient(
+      -45deg,
+      #000000,
+      #111111,
+      #1a1a1a
+    );
+  }
+
+  .profile-card::after{
+    background: rgba(0,0,0,0.2);
+  }
+
+  .profile-card p{
+    color:#dcdcdc;
+  }
+
+}
+
+
+/* ================= PROGRESS CIRCLE ================= */
+
+.progress-wrapper{
+  position:relative;
+  width:170px;
+  height:170px;
+  margin:0 auto 20px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.progress-ring{
+  position:absolute;
+  transform:rotate(-90deg);
+}
+
+.progress-bg{
+  fill:none;
+  stroke:#e5e7eb;
+  stroke-width:12;
+}
+
+.progress-bar{
+  fill:none;
+  stroke:#2a5298;
+  stroke-width:12;
+  stroke-linecap:round;
+  stroke-dasharray:471;
+  stroke-dashoffset:471;
+  transition:stroke-dashoffset 1s ease;
+}
+
+/* Image inside progress */
+
+.progress-wrapper img{
+  position:absolute;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:5px solid #2a5298;
+  object-fit:cover;
+  background:white;
+}
+
+/* ================= TEACHERS ================= */
+
+.teacher-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:25px;
+}
+
+.teacher-card{
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,0.06);
+}
+
+.teacher-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 45px rgba(0,0,0,0.12);
+}
+
+.teacher-card img{
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #2a5298;
+  margin-bottom:12px;
+}
+
+.teacher-card h3{
+  color:#1e3c72;
+}
+
+.teacher-card p{
+  font-size:14px;
+  color:#555;
+}
+
+/* ================= TRACKER ================= */
+
+.tracker-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:25px;
+}
+
+.tracker-card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.06);
+}
+
+.status-done{
+  color:#16a34a;
+  font-weight:700;
+}
+
+.status-progress{
+  color:#f59e0b;
+  font-weight:700;
+}
+/* ================= FULL WEEKLY CARD ================= */
+
+.weekly-timetable-card{
+  background:white;
+  padding:35px;
+  border-radius:28px;
+  box-shadow:0 30px 70px rgba(0,0,0,0.08);
+  margin-top:30px;
+  overflow:hidden;
+}
+
+.weekly-timetable-card h2{
+  margin-bottom:25px;
+  font-weight:800;
+  color:#1e3c72;
+}
+
+.calendar-wrapper{
+  overflow-x:auto;
+}
+
+.calendar-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1000px;
+}
+
+.calendar-table th{
+  background:linear-gradient(135deg,#2a5298,#6e8efb);
+  color:white;
+  padding:15px;
+  font-weight:600;
+  text-align:center;
+}
+
+.calendar-table td{
+  padding:12px;
+  border:1px solid #eee;
+  height:100px;
+  vertical-align:top;
+  position:relative;
+  transition:0.3s;
+}
+
+.calendar-table td:hover{
+  background:#f4f8ff;
+  cursor:pointer;
+}
+
+/* TODAY COLUMN HIGHLIGHT */
+.today-column{
+  background:#eaf1ff !important;
+}
+
+/* Subject Block */
+.subject-block{
+  border-radius:14px;
+  padding:10px;
+  font-size:13px;
+  color:white;
+  margin-bottom:6px;
+  position:relative;
+  animation:fadeIn 0.4s ease;
+}
+
+/* Teacher Avatar */
+.teacher-avatar{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  position:absolute;
+  bottom:6px;
+  right:6px;
+  border:2px solid white;
+}
+
+/* Animated Clock */
+.clock{
+  font-size:12px;
+  display:inline-block;
+  margin-bottom:5px;
+  animation:tick 1s infinite linear;
+}
+
+@keyframes tick{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+
+/* =====================================================
+   🚀 PROFESSIONAL TEACHER CARD (ULTRA CLEAN VERSION)
+===================================================== */
+
+.teacher-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:35px;
+  padding:20px 0;
+}
+
+/* ================= CARD ================= */
+
+.teacher-card{
+  background:#ffffff;
+  border-radius:28px;
+  padding:30px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  text-align:center;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.05);
+
+  transition:0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Hover */
+
+.teacher-card:hover{
+  transform:translateY(-10px);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.12);
+}
+
+/* Decorative Top Line */
+
+.teacher-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:6px;
+  background:linear-gradient(90deg,#2a5298,#6e8efb);
+}
+
+/* ================= IMAGE ================= */
+
+.teacher-card img{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+
+  border:5px solid #2a5298;
+
+  margin-bottom:18px;
+
+  transition:0.3s ease;
+}
+
+.teacher-card:hover img{
+  transform:scale(1.08);
+}
+
+/* ================= NAME ================= */
+
+.teacher-card h3{
+  font-size:20px;
+  font-weight:700;
+  color:#1e3c72;
+
+  margin-bottom:6px;
+}
+
+/* ================= INFO TEXT ================= */
+
+.teacher-info{
+  font-size:14px;
+  color:#555;
+  margin:4px 0;
+}
+
+/* Years / Experience Badge */
+
+.teacher-experience{
+  margin-top:10px;
+  padding:6px 14px;
+
+  background:#f4f7ff;
+  color:#2a5298;
+
+  border-radius:20px;
+
+  font-size:12px;
+  font-weight:600;
+}
+
+/* ================= STATUS ================= */
+
+.teacher-status{
+  margin-top:10px;
+  padding:6px 14px;
+
+  border-radius:20px;
+
+  font-size:12px;
+  font-weight:600;
+}
+
+.teacher-status.available{
+  background:#e6f9ee;
+  color:#16a34a;
+}
+
+.teacher-status.busy{
+  background:#fff3dc;
+  color:#f59e0b;
+}
+
+/* ================= WHATSAPP BUTTON ================= */
+
+.teacher-whatsapp-btn{
+
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+
+  border-radius:18px;
+
+  background:linear-gradient(135deg,#25D366,#1ebe5d);
+  color:white;
+
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+
+  transition:0.3s ease;
+
+  box-shadow:0 10px 25px rgba(37,211,102,0.4);
+}
+
+.teacher-whatsapp-btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(37,211,102,0.6);
+}
+
+
+/* ================= TRACKER PREMIUM STYLE ================= */
+
+.tracker-card{
+  background:white;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.06);
+  transition:0.3s ease;
+}
+
+.tracker-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 25px 50px rgba(0,0,0,0.12);
+}
+
+/* Top Percentage Badge */
+.tracker-header{
+  text-align:center;
+  font-size:26px;
+  font-weight:800;
+  color:#2a5298;
+  transition:0.3s;
+}
+
+.tracker-header.done{
+  color:#16a34a;
+  text-shadow:0 0 10px rgba(22,163,74,0.4);
+}
+
+/* Progress Bar */
+.progress-bg-bar{
+  width:100%;
+  height:10px;
+  background:#eee;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,#2a5298,#6e8efb);
+  border-radius:20px;
+  transition:width 1s ease;
+}
+
+/* Status */
+.tracker-status{
+  margin-top:10px;
+  text-align:center;
+  font-weight:600;
+  padding:6px;
+  border-radius:12px;
+  display:inline-block;
+}
+
+.tracker-status.completed{
+  background:#e6f9ee;
+  color:#16a34a;
+}
+
+.tracker-status.progressing{
+  background:#fff3dc;
+  color:#f59e0b;
+}
+/* =====================================================
+   ✅ RESPONSIVE DESIGN – MODERN FIX
+===================================================== */
+
+/* ===== TABLET ===== */
+@media (max-width: 1024px) {
+
+  body {
+    overflow: auto;
+  }
+
+  .sidebar {
+    width: 200px;
+    padding: 20px 15px;
+  }
+
+  .main {
+    padding: 25px;
+  }
+
+  .profile-card {
+    margin: 40px auto;
+    padding: 30px;
+  }
+
+  .teacher-grid,
+  .tracker-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  body {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+  }
+
+  .sidebar button {
+    width: auto;
+    margin: 5px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .main {
+    width: 100%;
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .profile-card {
+    width: 100%;
+    padding: 25px;
+    margin: 20px 0;
+  }
+
+  .profile-card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .teacher-grid,
+  .tracker-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-timetable-card {
+    padding: 20px;
+  }
+
+  .calendar-table {
+    min-width: 700px;
+  }
+
+}
+
+/* ===== SMALL MOBILE ===== */
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-card h3 {
+    font-size: 18px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+/* ================= PROFILE LOAD ANIMATION ================= */
+
+.profile-animate {
+  animation: profilePop 0.8s ease forwards;
+}
+
+@keyframes profilePop {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+
+
+
+/* =====================================================
+   🚀 INTERACTIVE EFFECTS
+===================================================== */
+
+/* ================= MOUSE FOLLOW GLOW ================= */
+
+.mouse-glow{
+  position:absolute;
+  width:300px;
+  height:300px;
+  background:radial-gradient(
+    circle,
+    rgba(255,255,255,0.25),
+    transparent 60%
+  );
+
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  filter:blur(60px);
+
+  opacity:0;
+  transition:opacity 0.3s ease;
+  z-index:0;
+}
+
+/* ================= PARTICLE BACKGROUND ================= */
+
+.particles{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+
+.particles::before,
+.particles::after{
+  content:"";
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:white;
+  border-radius:50%;
+  opacity:0.6;
+  animation:particleMove 20s linear infinite;
+  box-shadow:
+    50px 80px white,
+    120px 40px white,
+    200px 150px white,
+    300px 60px white,
+    400px 200px white;
+}
+
+.particles::after{
+  animation-delay:-10s;
+}
+
+/* Particle Animation */
+
+@keyframes particleMove{
+  from{
+    transform:translateY(0);
+  }
+  to{
+    transform:translateY(-800px);
+  }
+}
+
+/* ================= FLOATING ICONS ================= */
+
+.floating-icons{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  font-size:22px;
+  animation:floatIcons 4s ease-in-out infinite;
+  opacity:0.8;
+  z-index:2;
+}
+
+@keyframes floatIcons{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(-15px); }
+  100%{ transform:translateY(0); }
+}
+
+/* ================= 3D TILT EFFECT ================= */
+
+.profile-card{
+  transform-style:preserve-3d;
+  perspective:1000px;
+}
+/* =====================================================
+   🚀 PROGRESS SUMMARY CARDS (FIXED PROFESSIONAL STYLE)
+===================================================== */
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  margin-bottom:40px;
+}
+
+.summary-card{
+  background:white;
+  padding:25px;
+  border-radius:22px;
+  text-align:center;
+
+  box-shadow:0 15px 35px rgba(0,0,0,0.06);
+  transition:0.3s ease;
+}
+
+.summary-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 25px 50px rgba(0,0,0,0.12);
+}
+
+/* Big Number */
+.summary-card h3{
+  font-size:32px;
+  font-weight:800;
+  color:#2a5298;
+  margin-bottom:8px;
+}
+
+/* Label */
+.summary-card p{
+  font-size:14px;
+  color:#666;
+  font-weight:600;
+}
+
+/* Rank Special Style */
+.rank-card{
+  background:linear-gradient(135deg,#2a5298,#6e8efb);
+  color:white;
+}
+
+.rank-card h3{
+  color:white;
+}
+
+.rank-card p{
+  color:#e6e6e6;
+}
+.sidebar button.active{
+  background:linear-gradient(135deg,#6e8efb,#2a5298);
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>Student</h2>
+  <button onclick="showProfile()">My Profile</button>
+  <button onclick="showTeachers()">Teachers</button>
+  <button onclick="showTracker()">My Progress</button>
+  <button onclick="showTimetable()">My Timetable</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+  <!-- PROFILE -->
+<div id="profileSection">
+  <h1>My Profile</h1>
+
+  <div class="profile-card">
+<div class="shine"></div>
+<div class="particles"></div>
+<div class="mouse-glow"></div>
+
+<div class="floating-icons">
+  ⭐
+  🚀
+  ✨
+  💎
+</div>
+    <!-- STATUS -->
+    <div class="status-badge" id="statusBadge">Active</div>
+
+    <!-- PROGRESS + IMAGE -->
+    <div class="progress-wrapper">
+
+      <svg class="progress-ring" width="170" height="170">
+        <circle class="progress-bg"
+          cx="85"
+          cy="85"
+          r="75">
+        </circle>
+
+        <circle class="progress-bar"
+          cx="85"
+          cy="85"
+          r="75">
+        </circle>
+      </svg>
+
+      <!-- IMAGE INSIDE PROGRESS -->
+      <img id="profilePic" src="https://via.placeholder.com/120">
+
+    </div>
+
+    <!-- INFO -->
+    <h3 id="name"></h3>
+
+    <p>Age: <span id="age"></span></p>
+    <p>Gender: <span id="gender"></span></p>
+    <p>Location: <span id="location"></span></p>
+    <p>Contact: <span id="contact"></span></p>
+    <p>Level: <span id="level"></span></p>
+
+  </div>
+</div>
+
+  <!-- TEACHERS -->
+  <div id="teachersSection" style="display:none">
+    <h1>Teachers</h1>
+    <div class="teacher-grid" id="teacherGrid"></div>
+  </div>
+  <div id="trackerSection" style="display:none">
+  <h1>My Progress</h1>
+
+  <div class="summary-grid">
+
+    <div class="summary-card">
+      <h3 id="totalCount">0</h3>
+      <p>Total Surahs</p>
+    </div>
+
+    <div class="summary-card">
+      <h3 id="completedCount">0</h3>
+      <p>Completed</p>
+    </div>
+
+    <div class="summary-card">
+      <h3 id="xpCount">0</h3>
+      <p>XP Points</p>
+    </div>
+
+    <div class="summary-card">
+      <h3 id="streakCount">0</h3>
+      <p>🔥 Day Streak</p>
+    </div>
+
+    <div class="summary-card rank-card">
+      <h3 id="rankBadge">Beginner</h3>
+      <p>Rank</p>
+    </div>
+
+  </div>
+
+  <div class="tracker-grid" id="trackerGrid"></div>
+  </div>
+
+
+  
+  <!-- TIMETABLE -->
+  <div id="timetableSection" style="display:none">
+    <h1>My Timetable</h1>
+    <div class="timetable-grid" id="timetableGrid"></div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+
+const API = "http://localhost:5000";
+
+// ================= AUTH =================
+const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
+
+if (!token || role !== "student") {
+  alert("Login first");
+  window.location.href = "index.html";
+}
+
+// ================= ELEMENTS =================
+const profilePic = document.getElementById("profilePic");
+const nameElem = document.getElementById("name");
+const ageElem = document.getElementById("age");
+const genderElem = document.getElementById("gender");
+const locationElem = document.getElementById("location");
+const contactElem = document.getElementById("contact");
+const levelElem = document.getElementById("level");
+
+const teacherGrid = document.getElementById("teacherGrid");
+const trackerGrid = document.getElementById("trackerGrid");
+const timetableGrid = document.getElementById("timetableGrid");
+
+const profileSection = document.getElementById("profileSection");
+const teachersSection = document.getElementById("teachersSection");
+const trackerSection = document.getElementById("trackerSection");
+const timetableSection = document.getElementById("timetableSection");
+
+// ================= NAVIGATION =================
+function showSection(section) {
+  profileSection.style.display = "none";
+  teachersSection.style.display = "none";
+  trackerSection.style.display = "none";
+  timetableSection.style.display = "none";
+
+  section.style.display = "block";
+}
+
+function showProfile() {
+  showSection(profileSection);
+  loadProfile();
+}
+
+function showTeachers() {
+  showSection(teachersSection);
+  loadTeachers();
+}
+
+function showTracker() {
+  showSection(trackerSection);
+  loadTracker();
+}
+
+function showTimetable() {
+  showSection(timetableSection);
+  loadTimetable();
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+// ================= PROFILE (PROFESSIONAL ANIMATED VERSION) =================
+async function loadProfile() {
+  try {
+
+    const res = await fetch(`${API}/api/student/profile`, {
+      headers: { Authorization: "Bearer " + token }
+    });
+
+    if (!res.ok) throw new Error("Profile fetch failed");
+
+    const data = await res.json();
+
+    // ================== PROFILE CARD ANIMATION ==================
+    const profileCard = document.querySelector(".profile-card");
+    if (profileCard) {
+      profileCard.classList.remove("profile-animate");
+      void profileCard.offsetWidth;
+      profileCard.classList.add("profile-animate");
+    }
+
+    // ================== SET PROFILE DATA ==================
+    profilePic.src = data.profilePic || "https://via.placeholder.com/150?text=User";
+    nameElem.innerText = data.name || "Student";
+    ageElem.innerText = data.age || "—";
+    genderElem.innerText = data.gender || "—";
+    locationElem.innerText = data.location || "—";
+    contactElem.innerText = data.contact || "—";
+    levelElem.innerText = data.level || "Beginner";
+
+    // ================== ANIMATE TEXT ==================
+    [nameElem, ageElem, genderElem, locationElem, contactElem, levelElem]
+      .forEach(el => {
+        if (el) {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(15px)";
+          setTimeout(() => {
+            el.style.transition = "0.6s ease";
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          }, 150);
+        }
+      });
+
+    // ================== STATUS BADGE ==================
+    const statusBadge = document.getElementById("statusBadge");
+
+    if (statusBadge) {
+      statusBadge.innerText = "Online";
+      statusBadge.style.background = "#16a34a";
+      statusBadge.style.transform = "scale(0)";
+
+      setTimeout(() => {
+        statusBadge.style.transition = "0.6s ease";
+        statusBadge.style.transform = "scale(1)";
+      }, 200);
+    }
+
+    // ================== PROGRESS CIRCLE ==================
+    const circle = document.querySelector(".progress-bar");
+
+    if (circle) {
+
+      const radius = circle.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+
+      circle.style.strokeDasharray = circumference;
+      circle.style.transition = "stroke-dashoffset 1.5s ease";
+
+      let percent = 33;
+      if (data.level === "Intermediate") percent = 66;
+      if (data.level === "Advanced") percent = 100;
+
+      const offset =
+        circumference - (percent / 100) * circumference;
+
+      // Animate after small delay for smooth effect
+      setTimeout(() => {
+        circle.style.strokeDashoffset = offset;
+      }, 300);
+    }
+
+  } catch (err) {
+    console.error("Profile error:", err);
+
+    const profileSection = document.getElementById("profileSection");
+    if (profileSection) {
+      profileSection.innerHTML =
+        "<h2 style='color:red;text-align:center;'>Failed to Load Profile ❌</h2>";
+    }
+  }
+}
+
+
+/* =====================================================
+   🚀 TEACHERS — WITH WHATSAPP BUTTON (PROFESSIONAL)
+===================================================== */
+
+async function loadTeachers() {
+
+  try {
+
+    const res = await fetch(`${API}/api/admin/teachers`, {
+      headers: { Authorization: "Bearer " + token }
+    });
+
+    if (!res.ok) throw new Error("Teacher fetch failed");
+
+    const data = await res.json();
+
+    teacherGrid.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      teacherGrid.innerHTML =
+        "<p style='text-align:center;'>No teachers available</p>";
+      return;
+    }
+
+    data.forEach(t => {
+
+teacherGrid.innerHTML += `
+  <div class="teacher-card">
+
+    <img src="${t.photo || 'https://via.placeholder.com/120'}">
+
+    <h3>${t.name}</h3>
+
+    <div class="teacher-experience">
+      ⏳ ${t.experience || "Experience Not Added"}
+    </div>
+
+    <div class="teacher-status available">
+      🟢 Available
+    </div>
+
+    <a 
+      href="https://wa.me/254789539543?text=Hello%20${encodeURIComponent(t.name)}"
+      target="_blank"
+      class="teacher-whatsapp-btn"
+    >
+      💬 Contact via WhatsApp
+    </a>
+
+  </div>
+`;
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    teacherGrid.innerHTML =
+      "<p style='color:red;text-align:center;'>Error loading teachers ❌</p>";
+
+  }
+}
+
+
+// ================= TRACKER PRO LOGIC (FIXED STEP 1) =================
+async function loadTracker() {
+
+  try {
+
+    const trackerGrid = document.getElementById("trackerGrid");
+    if (!trackerGrid) return;
+
+    const res = await fetch(`${API}/api/student/tracker`, {
+      headers: { Authorization: "Bearer " + token }
+    });
+
+    if (!res.ok) throw new Error("Tracker fetch failed");
+
+    const data = await res.json();
+
+    trackerGrid.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      trackerGrid.innerHTML = "<p>No progress yet</p>";
+      updateSummary(0,0,0);
+      return;
+    }
+
+    const SURAH_PAGES = {
+      "Al-Fatihah": 7,
+      "Al-Baqarah": 286,
+      "Al-Imran": 200,
+      "An-Nisa": 176,
+      "Al-Ma'idah": 120
+    };
+
+    let totalXP = 0;
+    let completed = 0;
+    let totalSurahs = data.length;
+
+    data.forEach(item => {
+
+      const maxPages = SURAH_PAGES[item.surah] || 20;
+      const currentPage = Number(item.page) || 0;
+
+      const percent = Math.min(
+        Math.round((currentPage / maxPages) * 100),
+        100
+      );
+
+      if (percent === 100) completed++;
+
+      totalXP += percent * 10;
+
+      trackerGrid.innerHTML += `
+        <div class="tracker-card">
+          <h3>📖 ${item.surah}</h3>
+
+          <p>📄 ${currentPage} / ${maxPages}</p>
+
+          <div class="progress-bg-bar">
+            <div class="progress-fill"
+              style="width:${percent}%">
+            </div>
+          </div>
+
+          <p style="margin-top:10px;font-weight:600;">
+            ${percent}%
+          </p>
+
+          <p>
+            ${percent === 100
+              ? "✅ Completed"
+              : "⏳ In Progress"}
+          </p>
+
+        </div>
+      `;
+    });
+
+    // ✅ Update summary properly
+    updateSummary(totalSurahs, completed, totalXP);
+
+  } catch (err) {
+
+    console.error(err);
+
+    const trackerGrid = document.getElementById("trackerGrid");
+    if (trackerGrid) {
+      trackerGrid.innerHTML =
+        "<p style='color:red;'>Error loading tracker ❌</p>";
+    }
+  }
+}
+
+// ================= TRACKER SUMMARY UPDATE =================
+function updateSummary(totalSurahs, completed, xp){
+
+  const totalEl = document.getElementById("totalCount");
+  const completedEl = document.getElementById("completedCount");
+  const xpEl = document.getElementById("xpCount");
+  const streakEl = document.getElementById("streakCount");
+  const rankEl = document.getElementById("rankBadge");
+
+  if(totalEl) totalEl.innerText = totalSurahs;
+  if(completedEl) completedEl.innerText = completed;
+  if(xpEl) xpEl.innerText = xp;
+
+  // 🔥 SIMPLE STREAK LOGIC (temporary)
+  let streak = Math.floor(completed / 2);
+  if(streakEl) streakEl.innerText = streak;
+
+  // 🔥 Rank Logic
+  let rank = "Beginner";
+
+  if (xp > 500) rank = "Intermediate";
+  if (xp > 1500) rank = "Advanced";
+  if (xp > 3000) rank = "Hafiz";
+
+  if(rankEl) rankEl.innerText = rank;
+}
+
+// ================= TIMETABLE FIXED =================
+async function loadTimetable() {
+
+  try {
+
+    const res = await fetch(`${API}/api/student/timetable`, {
+      headers: { Authorization: "Bearer " + token }
+    });
+
+    if (!res.ok) throw new Error("Timetable fetch failed");
+
+    const data = await res.json();
+
+    timetableGrid.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      timetableGrid.innerHTML =
+        "<p>No timetable found</p>";
+      return;
+    }
+
+    // ✅ Get first timetable
+    const timetable = data[0];
+
+    if (!timetable.week || !Array.isArray(timetable.week)) {
+      timetableGrid.innerHTML =
+        "<p>Timetable format incorrect ❌</p>";
+      return;
+    }
+
+    timetable.week.forEach(dayObj => {
+
+      const dayCard = document.createElement("div");
+      dayCard.className = "teacher-card"; // reuse nice styling
+
+      let slotsHTML = "";
+
+      if (dayObj.slots && dayObj.slots.length > 0) {
+
+        dayObj.slots.forEach(slot => {
+
+          slotsHTML += `
+            <div style="background:#f4f7ff;padding:10px;border-radius:12px;margin-bottom:10px;">
+              <div><strong>${dayObj.day}</strong></div>
+              <div>📖 ${slot.subject || "N/A"}</div>
+              <div>⏰ ${slot.time || "N/A"}</div>
+              <div>👨‍🏫 ${slot.teacher || "N/A"}</div>
+            </div>
+          `;
+
+        });
+
+      } else {
+        slotsHTML = "<p>No slots</p>";
+      }
+
+      dayCard.innerHTML = `
+        <h3>${dayObj.day}</h3>
+        ${slotsHTML}
+      `;
+
+      timetableGrid.appendChild(dayCard);
+
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    timetableGrid.innerHTML =
+      "<p style='color:red;'>Error loading timetable ❌</p>";
+  }
+}
+
+
+// ================= ON LOAD =================
+window.onload = () => {
+  showProfile();
+};
+/* =====================================================
+   🚀 INTERACTIVE MOUSE EFFECTS
+===================================================== */
+
+const card = document.querySelector(".profile-card");
+const glow = document.querySelector(".mouse-glow");
+
+if(card && glow){
+
+  card.addEventListener("mousemove", (e)=>{
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Move glow
+    glow.style.left = x + "px";
+    glow.style.top = y + "px";
+    glow.style.opacity = "1";
+
+    // 3D Tilt
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    card.style.transform =
+      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  card.addEventListener("mouseleave", ()=>{
+
+    glow.style.opacity = "0";
+    card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+}
+document.querySelectorAll(".sidebar button").forEach(btn=>{
+  btn.addEventListener("click",function(){
+    document.querySelectorAll(".sidebar button")
+      .forEach(b=>b.classList.remove("active"));
+    this.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>
