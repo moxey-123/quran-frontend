@@ -39,9 +39,9 @@ button:hover{background:#5b76d1;}
 </div>
 
 <script>
-const API_ADMIN = "http://localhost:5000/api/admin";
-const API_STUDENT = "http://localhost:5000/api/student";
-
+  const BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "https://your-backend-name.onrender.com";
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
