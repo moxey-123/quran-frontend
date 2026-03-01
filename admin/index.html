@@ -37,11 +37,15 @@ button:hover{background:#5b76d1;}
 
   </form>
 </div>
-
 <script>
-  const BASE_URL = window.location.hostname === "localhost"
+
+const BASE_URL = window.location.hostname === "localhost"
   ? "http://localhost:5000"
   : "https://your-backend-name.onrender.com";
+
+const API_ADMIN = `${BASE_URL}/api/admin`;
+const API_STUDENT = `${BASE_URL}/api/student`;
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -51,7 +55,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const errorMsg = document.getElementById("errorMsg");
   errorMsg.innerText = "";
 
-  const url = role === "admin" ? `${API_ADMIN}/login` : `${API_STUDENT}/login`;
+  const url = role === "admin"
+    ? `${API_ADMIN}/login`
+    : `${API_STUDENT}/login`;
 
   try {
     const res = await fetch(url, {
@@ -68,17 +74,16 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       return;
     }
 
-    // Save role & token, redirect
     if (role === "admin") {
       localStorage.setItem("role", "admin");
-      localStorage.setItem("token", data.token || ""); // if admin API returns a token
+      localStorage.setItem("token", data.token || "");
       window.location.href = "admin.html";
       return;
     }
 
     if (role === "student") {
       localStorage.setItem("role", "student");
-      localStorage.setItem("studentId", data.studentId);  // MongoDB _id
+      localStorage.setItem("studentId", data.studentId);
       localStorage.setItem("token", data.token);
       window.location.href = "student.html";
     }
@@ -88,6 +93,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     errorMsg.innerText = "Server error ❌";
   }
 });
+
 </script>
 
 </body>
