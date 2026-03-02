@@ -2544,9 +2544,11 @@ async function addTimetable(){
 
   });
 
+
+
   try {
 
-    const res = await fetch('http://localhost:5000/api/admin/timetable/add-week', {
+    const res = await fetch('https://quran-backend-gi90.onrender.com/api/admin/timetable/add-week', {
       method:'POST',
       headers:{
         'Authorization':'Bearer '+token,

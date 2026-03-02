@@ -1613,6 +1613,7 @@ async function loadTimetable() {
 
     const res = await fetch(`${API}/api/student/timetable`, {
       headers: { Authorization: "Bearer " + token }
+      
     });
 
     if (!res.ok) throw new Error("Timetable fetch failed");
