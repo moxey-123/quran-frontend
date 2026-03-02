@@ -1929,12 +1929,23 @@ const res = await fetch(
     alert("Error editing fee ❌");
   }
 }
-
 async function loadTotalIncome(){
 
-  const res = await fetch("http://localhost:5000/api/admin/fees/total",{
-    headers:{ Authorization:"Bearer "+token }
-  });
+  try {
+
+    const res = await fetch("http://localhost:5000/api/admin/fees/total",{
+      headers:{ Authorization:"Bearer "+token }
+    });
+
+    const data = await res.json();
+
+    document.getElementById("totalIncome").innerText =
+      data.total || 0;
+
+  } catch(err){
+    console.error("Total Income Error:", err);
+  }
+}
 async function deleteFee(id){
 
   if(!confirm("Delete fee?")) return;
@@ -2782,6 +2793,7 @@ function filterFees(){
         alert("Error fetching student ❌");
       }
   }
+
 /* =====================================================
    LOGOUT
 ===================================================== */
@@ -2822,5 +2834,7 @@ logout
 ].forEach(fn => {
   if(fn) window[fn.name] = fn;
 });
+
 </script>
 </body>
+</html>
