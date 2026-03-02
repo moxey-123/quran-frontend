@@ -1946,11 +1946,13 @@ async function loadTotalIncome(){
     console.error("Total Income Error:", err);
   }
 }
+
+
 async function deleteFee(id){
 
   if(!confirm("Delete fee?")) return;
 
-  await fetch("http://localhost:5000/api/admin/fees/"+id,{
+  await fetch("https://quran-backend-gi90.onrender.com/api/admin/fees/"+id,{
     method:"DELETE",
     headers:{ Authorization:"Bearer "+token }
   });
@@ -2709,6 +2711,7 @@ function highlightToday(){
     }
   });
 }
+
 async function loadStudentsForFee() {
   try {
     const res = await fetch("http://localhost:5000/api/students", {
