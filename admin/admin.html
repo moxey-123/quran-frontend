@@ -1598,11 +1598,13 @@ const openTimetableBtn = document.getElementById('openTimetableModalBtn');
 const feeList = document.getElementById("feeList");
 const openFeeBtn = document.getElementById("openFeeModalBtn");
 
-const API_ADMIN = 'http://localhost:5000/api/admin';
-const API_TEACHER = API_ADMIN + '/teachers';
-const API_TRACKER = API_ADMIN + '/tracker';
-const API_TIMETABLE = API_ADMIN + '/timetable';
 
+const BASE_URL = "https://quran-backend-gi90.onrender.com";
+
+const API_ADMIN = BASE_URL + "/api/admin";
+const API_TEACHER = API_ADMIN + "/teachers";
+const API_TRACKER = API_ADMIN + "/tracker";
+const API_TIMETABLE = API_ADMIN + "/timetable";
 /* =====================================================
    SECTION NAVIGATION
 ===================================================== */
@@ -1725,15 +1727,13 @@ async function addFee(){
     alert("Fill required fields ❌");
     return;
   }
+  let url = API_ADMIN + "/fees/add";
+let requestMethod = "POST";
 
-  // ✅ Decide if CREATE or UPDATE
-  let url = "http://localhost:5000/api/admin/fees/add";
-  let requestMethod = "POST";
-
-  if(editingFeeId){
-    url = "http://localhost:5000/api/admin/fees/" + editingFeeId;
-    requestMethod = "PUT";
-  }
+if(editingFeeId){
+  url = API_ADMIN + "/fees/" + editingFeeId;
+  requestMethod = "PUT";
+}
 
   try{
 
@@ -1786,16 +1786,15 @@ async function delTracker(id) {
   if(!confirm("Delete tracker?")) return;
 
   try {
-
-    const res = await fetch(
-      `http://localhost:5000/api/admin/tracker/${id}`, // 🔥 check if correct route
-      {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      }
-    );
+const res = await fetch(
+  API_ADMIN + "/tracker/" + id,
+  {
+    method: "DELETE",
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  }
+);
 
     const text = await res.text(); // ✅ safer than res.json()
 
@@ -1897,16 +1896,14 @@ async function updateStudent(){
 async function editFee(id){
 
   try{
-
-    // ✅ Get fresh fee from backend
-    const res = await fetch(
-      "http://localhost:5000/api/admin/fees/" + id,
-      {
-        headers:{
-          Authorization:"Bearer " + token
-        }
-      }
-    );
+const res = await fetch(
+  API_ADMIN + "/fees/" + id,
+  {
+    headers:{
+      Authorization:"Bearer " + token
+    }
+  }
+);
 
     const fee = await res.json();
 
@@ -1938,12 +1935,6 @@ async function loadTotalIncome(){
   const res = await fetch("http://localhost:5000/api/admin/fees/total",{
     headers:{ Authorization:"Bearer "+token }
   });
-
-  const data = await res.json();
-
-  document.getElementById("totalIncome").innerText =
-    data.total || 0;
-}
 async function deleteFee(id){
 
   if(!confirm("Delete fee?")) return;
